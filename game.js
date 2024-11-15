@@ -41,12 +41,12 @@ function draw() {
     rect(x - 320, y, 6, 20);
     rect(x - 310, y + 20, 6, 20);
   }
-  grass_straws(400, 700);
+  grass_straws(400, 730);
 
   //grass
   grass_straws(600, 665);
 
-  grass_straws(500, 665);
+  grass_straws(460, 665);
 
   grass_straws(550, 738);
 
@@ -56,15 +56,11 @@ function draw() {
 
   grass_straws(1000, 750);
 
-  grass_straws(1000, 650);
+  grass_straws(1050, 650);
 
   grass_straws(780, 750);
 
   grass_straws(320, 650);
-
-  grass_straws(320, 740);
-
-  grass_straws(1080, 700);
 
   //burrow function
   function burrow(x, y) {
@@ -73,7 +69,21 @@ function draw() {
   }
   burrow(400, 724);
 
-  //cloud
+  //function cloud
+  function cloud(x, y) {
+    fill(255);
+    ellipse(x, y, 80);
+    ellipse(x - 50, y + 30, 80);
+    ellipse(x - 60, y - 30, 80);
+    ellipse(x - 100, y, 70);
+  }
+  cloud(400, 130);
+
+  //clouds
+  cloud(130, 190);
+  cloud(807, 190);
+  cloud(600, 50);
+  cloud(200, 9);
 
   function mouseClicked() {
     if (mouseX > 355 && mouseX < 427 && mouseY > 476 && mouseY < 500);
