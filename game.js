@@ -1,12 +1,13 @@
 let gameStarted = false;
 let gameOver = false;
 let gameWon = false;
+let replayGame = false;
 let bunnyX = 600;
 let bunnyY = 0;
 let speed = 20;
 let gravity = 0.5;
 let thrust = -8;
-let softLanding = 10;
+let softLanding = 20;
 let hardLanding = 20;
 frameRate(40);
 
@@ -125,6 +126,14 @@ function draw() {
     textSize(100);
     textStyle(BOLD);
     text("Game Over", 400, 400);
+    //"Replay"
+if (replayGame) {
+  fill(255);
+    textFont("Helvetica");
+    textAlign(CENTER);
+    textSize(30);
+    textStyle(BOLD);
+    text("Replay", 393, 500);
     return;
   }
 
@@ -136,9 +145,19 @@ function draw() {
     textSize(100);
     textStyle(BOLD);
     text("Winner!", 400, 400);
+    //"Replay"
+if (replayGame) {
+  fill(255);
+    textFont("Helvetica");
+    textAlign(CENTER);
+    textSize(30);
+    textStyle(BOLD);
+    text("Replay", 393, 500);
     return;
   }
-
+  
+}
+}
   //background
   noStroke();
   fill(179, 255, 117);
@@ -167,7 +186,7 @@ function draw() {
   cloud(200, 9);
 
   //bunny falling
-  if (gameStarted && !gameOver && !gameWon) {
+  if (gameStarted && !gameOver && !gameWon && !replayGame) {
     speed += gravity;
 
     //hopping with spacebar
@@ -183,15 +202,19 @@ function draw() {
       //landing conditions
       if (speed > hardLanding) {
         gameOver = true;
+        replayGame = true;
       } else if (speed <= softLanding) {
         gameWon = true;
+        replayGame = true;
       }
+      
       speed = 0;
     }
 
     //bunny
     bunny(bunnyX, bunnyY, 1);
   }
+  
 }
 
 function mousePressed() {
@@ -204,7 +227,9 @@ function mousePressed() {
     mouseY < 500
   ) {
     gameStarted = true;
+  
   }
+  
 }
 
 //keycode
