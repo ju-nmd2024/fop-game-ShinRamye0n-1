@@ -1,4 +1,68 @@
-let gameStarted = false;  
+let gameStarted = false;
+let gameOver = false;
+let bunnyX = 600;
+let bunnyY = 0;
+let speed = 20;
+let gravity = 0.5;
+let thrust = -8;
+let hardLanding = 20;
+
+function bunny(x, y, s) {
+  //base
+  scale(0.6);
+  fill(0);
+  noStroke();
+  ellipse(x + 80, y - 55, 150);
+  ellipse(x + 30, y - 50, 135);
+
+  //front paw
+  push();
+  translate(x + 15, y + 22);
+  rotate(3);
+  ellipse(0, 0, 50, 30);
+  pop();
+
+  //back paw
+  push();
+  translate(x + 90, y + 20);
+  ellipse(0, 0, 40, 30);
+  pop();
+
+  //head
+  push();
+  translate(x - 50, y - 105);
+  rotate(1.1);
+  scale(0.9);
+  ellipse(0, 0, 100, 120);
+  pop();
+
+  //1st ear
+  push();
+  translate(x - 20, y - 154);
+  rotate(1.1);
+  scale(1.3);
+  ellipse(0, 0, 18, 80);
+  pop();
+
+  //2nd ear
+  push();
+  translate(x - 20, y - 170);
+  rotate(0.3);
+  scale(1.3);
+  ellipse(0, 0, 18, 80);
+  pop();
+
+  //eye
+  push();
+  fill(255);
+  translate(x - 50, y - 120);
+  rotate(1.1);
+  ellipse(0, 0, 9, 20);
+  pop();
+
+  //tail
+  ellipse(x + 140, y - 105, 40);
+}
 
 //grass straw function
 function grass_straws(x, y) {
@@ -24,13 +88,14 @@ function cloud(x, y) {
 }
 
 function setup() {
-  createCanvas(1000, 1000);
+  createCanvas(800, 850);
 }
 
 function draw() {
   background(143, 240, 255);
+
   if (!gameStarted) {
-    //bunny Lander Text
+    //bunny lander text
     stroke(254, 169, 210);
     strokeWeight(4);
     textFont("Helvetica");
@@ -40,7 +105,7 @@ function draw() {
     fill(255);
     text("Bunny Lander", 400, 400);
 
-    //start Text
+    //start text
     fill(255);
     textFont("Helvetica");
     textAlign(CENTER);
@@ -49,7 +114,18 @@ function draw() {
     text("Start", 393, 500);
   }
 
-  //functions
+  //"Game Over"
+  if (gameOver) {
+    fill(255, 0, 0);
+    textFont("Helvetica");
+    textAlign(CENTER);
+    textSize(60);
+    textStyle(BOLD);
+    text("Game Over", 400, 400);
+    return;
+  }
+
+  //background
   noStroke();
   fill(179, 255, 117);
   rect(0, 630, 1000, 300);
@@ -75,11 +151,48 @@ function draw() {
   cloud(807, 190);
   cloud(600, 50);
   cloud(200, 9);
+
+  //bunny falling
+  if (gameStarted && !gameOver) {
+    speed += gravity;
+
+    //hopping with spacebar
+    if (keyIsPressed && keyCode === 32) {
+      speed = thrust;
+    }
+    bunnyY += speed;
+
+    //landing
+    if (bunnyY >= 1200) {
+      bunnyY = 1200;
+
+      //landing conditions
+      if (speed > hardLanding) {
+        gameOver = true;
+      }
+    }
+
+    //bunny
+    bunny(bunnyX, bunnyY, 1);
+  }
 }
 
 function mousePressed() {
   //click to start
-  if (!gameStarted && mouseX > 355 && mouseX < 430 && mouseY > 476 && mouseY < 500) {
-    gameStarted = true;  
+  if (
+    !gameStarted &&
+    mouseX > 355 &&
+    mouseX < 430 &&
+    mouseY > 476 &&
+    mouseY < 500
+  ) {
+    gameStarted = true;
+  }
+}
+
+//keycode
+function keyPressed() {
+  if (keyCode === 32) {
+    speed = thrust;
   }
 }
