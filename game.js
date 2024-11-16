@@ -1,11 +1,14 @@
 let gameStarted = false;
 let gameOver = false;
+let gameWon = false;
 let bunnyX = 600;
 let bunnyY = 0;
 let speed = 20;
 let gravity = 0.5;
 let thrust = -8;
+let softLanding = 10;
 let hardLanding = 20;
+frameRate(40);
 
 function bunny(x, y, s) {
   //base
@@ -95,7 +98,7 @@ function draw() {
   background(143, 240, 255);
 
   if (!gameStarted) {
-    //bunny lander text
+    //"Bunny Lander" text
     stroke(254, 169, 210);
     strokeWeight(4);
     textFont("Helvetica");
@@ -105,7 +108,7 @@ function draw() {
     fill(255);
     text("Bunny Lander", 400, 400);
 
-    //start text
+    //"Start" text
     fill(255);
     textFont("Helvetica");
     textAlign(CENTER);
@@ -119,9 +122,20 @@ function draw() {
     fill(255, 0, 0);
     textFont("Helvetica");
     textAlign(CENTER);
-    textSize(60);
+    textSize(100);
     textStyle(BOLD);
     text("Game Over", 400, 400);
+    return;
+  }
+
+  //"Winner!"
+  if (gameWon) {
+    fill(46, 173, 0);
+    textFont("Helvetica");
+    textAlign(CENTER);
+    textSize(100);
+    textStyle(BOLD);
+    text("Winner!", 400, 400);
     return;
   }
 
@@ -153,7 +167,7 @@ function draw() {
   cloud(200, 9);
 
   //bunny falling
-  if (gameStarted && !gameOver) {
+  if (gameStarted && !gameOver && !gameWon) {
     speed += gravity;
 
     //hopping with spacebar
@@ -169,7 +183,10 @@ function draw() {
       //landing conditions
       if (speed > hardLanding) {
         gameOver = true;
+      } else if (speed <= softLanding) {
+        gameWon = true;
       }
+      speed = 0;
     }
 
     //bunny
