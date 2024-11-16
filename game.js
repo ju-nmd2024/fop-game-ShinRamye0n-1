@@ -1,7 +1,6 @@
 let gameStarted = false;
 let gameOver = false;
 let gameWon = false;
-let replayGame = false;
 let bunnyX = 600;
 let bunnyY = 0;
 let speed = 20;
@@ -126,17 +125,7 @@ function draw() {
     textSize(100);
     textStyle(BOLD);
     text("Game Over", 400, 400);
-    //"Replay"
-if (replayGame) {
-  fill(255);
-    textFont("Helvetica");
-    textAlign(CENTER);
-    textSize(30);
-    textStyle(BOLD);
-    text("Replay", 393, 500);
-    return;
   }
-
   //"Winner!"
   if (gameWon) {
     fill(46, 173, 0);
@@ -145,18 +134,7 @@ if (replayGame) {
     textSize(100);
     textStyle(BOLD);
     text("Winner!", 400, 400);
-    //"Replay"
-if (replayGame) {
-  fill(255);
-    textFont("Helvetica");
-    textAlign(CENTER);
-    textSize(30);
-    textStyle(BOLD);
-    text("Replay", 393, 500);
-    return;
-  }
-  
-}
+
 }
   //background
   noStroke();
@@ -186,7 +164,7 @@ if (replayGame) {
   cloud(200, 9);
 
   //bunny falling
-  if (gameStarted && !gameOver && !gameWon && !replayGame) {
+  if (gameStarted && !gameOver && !gameWon) {
     speed += gravity;
 
     //hopping with spacebar
@@ -202,12 +180,9 @@ if (replayGame) {
       //landing conditions
       if (speed > hardLanding) {
         gameOver = true;
-        replayGame = true;
       } else if (speed <= softLanding) {
         gameWon = true;
-        replayGame = true;
       }
-      
       speed = 0;
     }
 
