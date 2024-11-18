@@ -209,7 +209,7 @@ function mousePressed() {
   }
   //"Replay" if statement
   if (gameOver || gameWon) {
-    if (mouseX > 340 && mouseX < 460 && mouseY > 500 && mouseY < 550) {
+    if (mouseX > 355 && mouseX < 430 && mouseY > 476 && mouseY < 500) {
       replayGame();
     }
   }
