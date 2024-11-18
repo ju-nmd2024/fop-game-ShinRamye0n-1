@@ -6,8 +6,9 @@ let bunnyY = 0;
 let speed = 20;
 let gravity = 0.5;
 let thrust = -8;
-let softLanding = 20;
+let softLanding = 10;
 let hardLanding = 20;
+
 frameRate(40);
 
 function bunny(x, y, s) {
@@ -125,6 +126,8 @@ function draw() {
     textSize(100);
     textStyle(BOLD);
     text("Game Over", 400, 400);
+
+    drawReplayButton();
   }
   //"Winner!"
   if (gameWon) {
@@ -135,7 +138,9 @@ function draw() {
     textStyle(BOLD);
     text("Winner!", 400, 400);
 
-}
+    drawReplayButton();
+  }
+
   //background
   noStroke();
   fill(179, 255, 117);
@@ -189,7 +194,6 @@ function draw() {
     //bunny
     bunny(bunnyX, bunnyY, 1);
   }
-  
 }
 
 function mousePressed() {
@@ -202,11 +206,34 @@ function mousePressed() {
     mouseY < 500
   ) {
     gameStarted = true;
-  
   }
-  
+  //"Replay" if statement
+  if (gameOver || gameWon) {
+    if (mouseX > 340 && mouseX < 460 && mouseY > 500 && mouseY < 550) {
+      replayGame();
+    }
+  }
 }
 
+//"Replay" button
+function drawReplayButton() {
+  stroke(254, 169, 210);
+  strokeWeight(4);
+  fill(255);
+  textFont("Helvetica");
+  textAlign(CENTER, CENTER);
+  textSize(30);
+  textStyle(BOLD);
+  text("Replay", 395, 500);
+}
+
+function replayGame() {
+  gameStarted = false;
+  gameOver = false;
+  gameWon = false;
+  bunnyY = 0;
+  speed = 20;
+}
 //keycode
 function keyPressed() {
   if (keyCode === 32) {
